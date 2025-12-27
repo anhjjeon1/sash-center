@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>청개구리 AI 진단 센터</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <style>
+        /* 1. 기본 설정 & 배경 */
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background: linear-gradient(135deg, #f0f2f5 0%, #e6e9f0 100%);
+            margin: 0;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* 화면 중앙 정렬 */
+            color: #333;
+            min-height: 100vh; /* 배경은 화면 꽉 채움 */
+        }
+
+        /* 메인 컨테이너 (흰색 박스) */
+        .container {
+            width: 90%;
+            max-width: 460px;
+            background-color: #ffffff;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            
+            /* ▼▼▼ [수정 핵심] min-height: 100vh를 삭제하고 auto로 변경 ▼▼▼ */
+            height: auto; 
+            /* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
+        }
+
+        /* 버전 태그 */
+        .version-badge {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 0.7rem;
+            color: #999;
+            background-color: #f1f3f5;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            z-index: 10;
+        }
+
+        .text-truncate {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+            width: 100%;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+
+        /* 2. 헤더 디자인 */
+        .header {
+            padding: 35px 25px 20px;
+            background: #fff;
+            text-align: left;
+        }
+        .tech-tag {
+            display: inline-block;
+            background-color: #e8f7ed;
+            color: #00C73C;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin-bottom: 5px; 
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 5px rgba(0, 199, 60, 0.2);
+        }
+        .header h1 {
+            margin: 10px 0;
+            font-size: 1.6rem; 
+            font-weight: 800;
+            color: #1a1f36;
+            line-height: 1.2;
+            white-space: nowrap; 
+        }
+        .header .highlight {
+            color: #00C73C;
+            position: relative;
+            display: inline-block;
+        }
+        .header .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: rgba(0, 199, 60, 0.2);
+            z-index: -1;
+        }
+        .header p {
+            color: #6b7280;
+            font-size: 1rem;
+            font-weight: 500;
+            margin: 0 auto;
+            max-width: 95%;
+        }
+
+        /* 3. 비디오 섹션 */
+        .video-section {
+            padding: 0 25px;
+            margin-bottom: 30px;
+        }
+        .video-wrapper {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            background-color: #000;
+            aspect-ratio: 16 / 9;
+            transform: perspective(1000px) rotateX(2deg);
+            transition: transform 0.3s ease;
+        }
+        .video-wrapper:hover {
+             transform: perspective(1000px) rotateX(0deg) scale(1.02);
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #1a1f36, #2d3748);
+            color: #fff;
+        }
+        .play-pulse {
+             animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* 4. 액션 버튼 영역 */
+        .action-section {
+            padding: 30px 25px;
+            background-color: #f8fafc; 
+            border-radius: 30px 30px 0 0;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.03);
+        }
+
+        .tech-card-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 20px 22px;
+            margin-bottom: 18px;
+            background: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-sizing: border-box;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05), 0 6px 6px rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        .tech-card-btn:hover, .tech-card-btn:active {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 20px 30px rgba(0, 199, 60, 0.15), 0 10px 10px rgba(0, 199, 60, 0.1);
+            border-color: #00C73C;
+        }
+
+        .btn-icon-box {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-right: 18px;
+            flex-shrink: 0;
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.5), 0 4px 8px rgba(0,0,0,0.05);
+        }
+        
+        .icon-sash { background: linear-gradient(135deg, #e8f7ed, #c6f6d5); color: #00C73C; }
+        .icon-dew { background: linear-gradient(135deg, #e0f2fe, #bae6fd); color: #0ea5e9; }
+
+        .btn-text { flex-grow: 1; overflow: hidden; padding-right: 10px; }
+        .btn-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #1a1f36;
+            margin-bottom: 4px;
+        }
+        .btn-desc {
+            font-size: 0.95rem;
+            color: #6b7280;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        /* QR 코드 스타일 */
+        .qr-box-small {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+            margin-left: auto;
+        }
+        .qr-img-small {
+            width: 72px;
+            height: 72px;
+            border-radius: 8px;
+            border: 2px solid #eee;
+            background-color: #fff;
+            padding: 2px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .qr-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #94a3b8;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* 5. 푸터 */
+        .footer {
+            text-align: center;
+            /* 여백 최소화 */
+            padding: 20px 25px 30px; 
+            color: #94a3b8;
+            font-size: 0.85rem;
+            background-color: #f8fafc;
+        }
+        .cs-link {
+            color: #6b7280;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #fff;
+            border-radius: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        .cs-link i { margin-right: 8px; color: #00C73C;}
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="version-badge">Ver 1.2</div>
+        <div class="header">
+            <span class="tech-tag">AI Smart Diagnosis</span>
+            <div class="text-center">
+                <h1>청개구리 <span class="highlight">AI 진단 센터</span></h1>
+                <p class="text-truncate">최신 인공지능 기술로 창호 문제를 쉽고 정확하게 분석합니다.</p>
+            </div>
+        </div>
+
+        <div class="video-section">
+            <div class="video-wrapper">
+                <div class="video-placeholder">
+                    <i class="fa-solid fa-circle-play fa-4x play-pulse" style="color:#00C73C; margin-bottom:15px;"></i>
+                    <span style="font-weight:700; font-size:1.1rem;">아나운서 가이드 영상 터치</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-section">
+            <a href="https://anhjjeon1.github.io/sash-ai-diagnosis/" class="tech-card-btn">
+                <div class="btn-icon-box icon-sash">
+                    <i class="fa-solid fa-house-circle-check"></i>
+                </div>
+                <div class="btn-text">
+                    <span class="btn-title text-truncate">창호 정밀 진단 AI</span>
+                    <span class="btn-desc text-truncate">사진 한 장으로 외풍 및 하자를 분석합니다.</span>
+                </div>
+                <div class="qr-box-small">
+                    <div class="qr-img-small" style="background-image: url('qr_sash.png');"></div>
+                    <span class="qr-label">SCAN</span>
+                </div>
+            </a>
+
+            <a href="https://anhjjeon1.github.io/dewpoint-check/" class="tech-card-btn">
+                <div class="btn-icon-box icon-dew">
+                    <i class="fa-solid fa-droplet"></i>
+                </div>
+                <div class="btn-text">
+                    <span class="btn-title text-truncate">결로 원인 분석 AI</span>
+                    <span class="btn-desc text-truncate">환기 부족인지 구조적 문제인지 확인하세요.</span>
+                </div>
+                <div class="qr-box-small">
+                    <div class="qr-img-small" style="background-image: url('qr_dew.png');"></div>
+                    <span class="qr-label">SCAN</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>서비스 이용에 어려움이 있으신가요?</p>
+            <a href="tel:1599-7380" class="cs-link">
+                <i class="fa-solid fa-phone-volume"></i> 1599-7380 고객센터
+            </a>
+            <div style="opacity: 0.6; font-size: 0.75rem;">© 2025 Cheong-gaeguri AI Center.</div>
+        </div>
+    </div>
+
+</body>
+</html>
