@@ -13,23 +13,29 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background-color: #eef1f5; /* 배경색 */
+            background-color: #eef1f5;
             display: flex;
             justify-content: center;
+            align-items: flex-start; /* 위쪽 정렬로 변경 */
             min-height: 100vh;
+            padding-bottom: 50px; /* 스크롤 여유 공간 */
         }
 
         /* 모바일 앱 형태의 컨테이너 */
         .app-container {
             width: 100%;
-            max-width: 480px; /* 모바일 너비 제한 */
+            max-width: 480px;
             background-color: #ffffff;
             box-shadow: 0 0 20px rgba(0,0,0,0.05);
-            min-height: 100vh;
+            /* min-height: 100vh;  <-- 이 부분을 삭제하여 빈 공간 제거 */
+            height: auto;        /* 내용물 크기에 맞춤 */
             padding: 20px;
+            padding-bottom: 40px; /* 하단 여백 조금 추가 */
             display: flex;
             flex-direction: column;
             align-items: center;
+            border-bottom-left-radius: 20px; /* 모바일처럼 하단 둥글게 */
+            border-bottom-right-radius: 20px;
         }
 
         /* 상단 배지 영역 */
@@ -47,14 +53,14 @@
         /* 타이틀 영역 */
         .title-section { text-align: center; margin-bottom: 25px; }
         .main-title { font-size: 22px; font-weight: 700; color: #333; margin-bottom: 5px; }
-        .highlight { color: #4CAF50; } /* 청개구리 초록색 */
+        .highlight { color: #4CAF50; }
         .sub-title { font-size: 13px; color: #666; }
 
-        /* 🟢 유튜브 영상 영역 (반응형) */
+        /* 유튜브 영상 영역 */
         .video-wrapper {
             width: 100%;
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 비율 유지 */
+            padding-bottom: 56.25%;
             height: 0;
             background-color: #000;
             border-radius: 15px;
@@ -68,28 +74,33 @@
             width: 100%; height: 100%;
         }
 
-        /* 메뉴 카드 스타일 */
+        /* 메뉴 카드 스타일 (클릭 영역 확대) */
         .menu-card {
             width: 100%;
             background: #fff;
             border-radius: 15px;
-            padding: 20px;
+            padding: 20px 15px; /* 좌우 패딩 조정 */
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             border: 1px solid #f0f0f0;
-            text-decoration: none; /* 링크 밑줄 제거 */
+            text-decoration: none;
             color: inherit;
-            transition: transform 0.2s;
+            transition: transform 0.2s, background 0.2s;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent; /* 터치 시 하이라이트 제거 */
         }
-        .menu-card:active { transform: scale(0.98); }
+        .menu-card:active { 
+            transform: scale(0.98); 
+            background-color: #fafafa;
+        }
 
         /* 아이콘 박스 */
         .icon-box {
             width: 50px; height: 50px;
+            min-width: 50px; /* 찌그러짐 방지 */
             border-radius: 12px;
             display: flex; justify-content: center; align-items: center;
             font-size: 24px;
@@ -100,22 +111,35 @@
 
         /* 카드 텍스트 */
         .card-text { flex: 1; }
-        .card-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; display: block; }
-        .card-desc { font-size: 12px; color: #888; display: block; }
+        .card-title { font-size: 17px; font-weight: 700; margin-bottom: 5px; display: block; }
+        .card-desc { font-size: 12px; color: #888; display: block; line-height: 1.4; }
 
-        /* QR 코드 영역 (모양만 구현) */
+        /* QR 코드 영역 (확대 수정됨) */
         .qr-box {
             text-align: center;
-            margin-left: 10px;
+            margin-left: 15px;
+            min-width: 50px; /* 공간 확보 */
         }
-        .qr-icon { font-size: 28px; color: #333; }
-        .qr-text { font-size: 9px; color: #aaa; margin-top: 2px; font-weight: 700; display: block;}
+        .qr-icon { 
+            font-size: 42px; /* 아이콘 크기 대폭 확대 */
+            color: #333; 
+            display: block;
+            margin-bottom: 5px;
+        }
+        .qr-text { 
+            font-size: 10px; 
+            color: #888; 
+            font-weight: 700; 
+            display: block;
+            background: #eee;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
 
         /* 하단 고객센터 */
         .footer {
-            margin-top: auto;
+            margin-top: 30px; /* 자동(auto) 대신 고정 여백으로 변경하여 위로 당김 */
             text-align: center;
-            padding-top: 30px;
             width: 100%;
         }
         .footer-text { font-size: 12px; color: #999; margin-bottom: 10px; }
@@ -158,13 +182,13 @@
             </iframe>
         </div>
 
-        <a href="#" class="menu-card" onclick="alert('진단 페이지가 준비 중입니다.\n관리자에게 문의해주세요.');">
+        <a href="#" class="menu-card" onclick="checkLink(event)">
             <div class="icon-box icon-home">
                 <i class="fa-solid fa-house-chimney-medical"></i>
             </div>
             <div class="card-text">
                 <span class="card-title">창호 정밀 진단 AI</span>
-                <span class="card-desc">사진 한 장으로 외풍 및 하자를 분석</span>
+                <span class="card-desc">사진 한 장으로<br>외풍 및 하자를 분석</span>
             </div>
             <div class="qr-box">
                 <i class="fa-solid fa-qrcode qr-icon"></i>
@@ -172,13 +196,13 @@
             </div>
         </a>
 
-        <a href="#" class="menu-card" onclick="alert('결로 분석 페이지가 준비 중입니다.\n관리자에게 문의해주세요.');">
+        <a href="#" class="menu-card" onclick="checkLink(event)">
             <div class="icon-box icon-water">
                 <i class="fa-solid fa-droplet"></i>
             </div>
             <div class="card-text">
                 <span class="card-title">결로 원인 분석 AI</span>
-                <span class="card-desc">환기 부족인지 구조적 문제인지 판별</span>
+                <span class="card-desc">환기 부족인지<br>구조적 문제인지 판별</span>
             </div>
             <div class="qr-box">
                 <i class="fa-solid fa-qrcode qr-icon"></i>
@@ -194,6 +218,17 @@
             <span class="copyright">© 2025 Cheong-gaeguri AI Center.</span>
         </div>
     </div>
+
+    <script>
+        // 주소를 입력하지 않고 눌렀을 때 안내 메시지
+        function checkLink(event) {
+            // href가 #이거나 비어있으면 경고창 띄움
+            if(event.currentTarget.getAttribute('href') === '#' || event.currentTarget.getAttribute('href') === '') {
+                alert('아직 연결된 진단 페이지 주소가 없습니다.\nHTML 코드의 href="#" 부분에 주소를 입력해주세요.');
+                event.preventDefault(); // 이동 막기
+            }
+        }
+    </script>
 
 </body>
 </html>
