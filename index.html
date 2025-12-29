@@ -15,7 +15,7 @@
         }
 
         body {
-            /* 2. & 3. 글씨체 및 기본 두께 변경 (Pretendard 적용, 두께 얇게) */
+            /* 폰트: Pretendard 적용 */
             font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
             background-color: var(--light-gray-bg);
             display: flex;
@@ -24,7 +24,7 @@
             min-height: 100vh;
             margin: 0;
             color: var(--dark-text);
-            font-weight: 400; /* 기본 글자 두께를 얇게 설정 */
+            font-weight: 400;
         }
 
         .container-card {
@@ -53,7 +53,6 @@
             color: var(--primary-green);
             font-size: 24px;
             margin: 0 0 10px 0;
-            /* 3. 글자 두께 변경: 기존의 매우 두꺼운 볼드에서 세미볼드로 변경 */
             font-weight: 700; 
         }
 
@@ -62,29 +61,26 @@
             color: #555;
             line-height: 1.5;
             margin-bottom: 25px;
-            font-weight: 400; /* 설명글은 얇게 */
+            font-weight: 400;
         }
 
-        /* 비디오 영역 (플레이스홀더) */
+        /* 비디오 영역 스타일 수정 */
         .video-container {
             background-color: #000;
             border-radius: 15px;
             overflow: hidden;
             margin-bottom: 25px;
             position: relative;
-            aspect-ratio: 16 / 9; /* 비디오 비율 유지 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
+            aspect-ratio: 16 / 9; /* 16:9 비율 유지 */
+            width: 100%;
         }
-        .video-placeholder-content {
-            text-align: center;
+        
+        /* 유튜브 영상을 꽉 차게 만들기 위한 설정 */
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
-        .play-icon {
-             font-size: 40px; color: red;
-        }
-
 
         /* 메뉴 박스 스타일 */
         .menu-box {
@@ -104,7 +100,6 @@
         .menu-text h3 {
             font-size: 16px;
             margin: 0 0 5px 0;
-            /* 3. 글자 두께 변경: 메뉴 제목을 적당히 두껍게(600) 설정 */
             font-weight: 600; 
             color: #222;
         }
@@ -167,20 +162,18 @@
         </p>
 
         <div class="video-container">
-            <div class="video-placeholder-content">
-                <div style="position:absolute; top: 10px; left: 10px; display:flex; align-items:center;">
-                    <span style="font-size: 20px; margin-right:5px;">🐸</span>
-                    <span style="font-size: 14px; font-weight: 500;">청개구리 AI앱 진단센터 사용법...</span>
-                </div>
-                <div class="play-icon">▶</div>
-                <div style="position:absolute; bottom: 10px; right: 10px;">
-                    <span style="font-size: 30px;">🐸</span> </div>
-             </div>
+            <iframe 
+                src="https://www.youtube.com/embed/https://www.youtube.com/watch?v=f84TL4sOUPg" 
+                title="YouTube video player" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+            </iframe>
         </div>
 
         <div class="menu-box">
             <div class="menu-content">
-                <div class="menu-icon">🏠</div> <div class="menu-text">
+                <div class="menu-icon">🏠</div>
+                <div class="menu-text">
                     <h3>창호 정밀진단 AI앱</h3>
                     <p>사진 촬영으로<br>시공 불량 및 외풍 분석</p>
                 </div>
@@ -190,7 +183,8 @@
 
         <div class="menu-box">
             <div class="menu-content">
-                <div class="menu-icon">💧</div> <div class="menu-text">
+                <div class="menu-icon">💧</div>
+                <div class="menu-text">
                     <h3>결로 원인분석 AI앱</h3>
                     <p>자가 진단표 작성<br>환경 및 구조적 원인 파악</p>
                 </div>
