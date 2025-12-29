@@ -8,14 +8,13 @@
     <style>
         /* ----- CSS 스타일 정의 ----- */
         :root {
-            --primary-green: #28a745; /* 메인 녹색 */
+            --primary-green: #28a745;
             --dark-text: #333333;
             --light-gray-bg: #f0f2f5;
             --card-bg: #ffffff;
         }
 
         body {
-            /* 폰트: Pretendard 적용 */
             font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
             background-color: var(--light-gray-bg);
             display: flex;
@@ -37,7 +36,6 @@
             text-align: center;
         }
 
-        /* 상단 뱃지 영역 */
         .header-badges {
             display: flex;
             justify-content: space-between;
@@ -48,7 +46,6 @@
         .badge-green { color: var(--primary-green); background-color: #e6f4ea; padding: 4px 8px; border-radius: 12px; }
         .badge-gray { color: #666; background-color: #eee; padding: 4px 8px; border-radius: 12px; }
 
-        /* 메인 타이틀 스타일 */
         h1.main-title {
             color: var(--primary-green);
             font-size: 24px;
@@ -64,25 +61,22 @@
             font-weight: 400;
         }
 
-        /* 비디오 영역 스타일 수정 */
         .video-container {
             background-color: #000;
             border-radius: 15px;
             overflow: hidden;
             margin-bottom: 25px;
             position: relative;
-            aspect-ratio: 16 / 9; /* 16:9 비율 유지 */
+            aspect-ratio: 16 / 9;
             width: 100%;
         }
         
-        /* 유튜브 영상을 꽉 차게 만들기 위한 설정 */
         .video-container iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
 
-        /* 메뉴 박스 스타일 */
         .menu-box {
             background-color: #f9f9f9;
             border-radius: 15px;
@@ -110,6 +104,7 @@
             font-weight: 400;
         }
 
+        /* 버튼 스타일 수정 (a태그로 변경 시 깨짐 방지) */
         .go-start-btn {
             background-color: #333;
             color: white;
@@ -120,9 +115,15 @@
             font-weight: 700;
             cursor: pointer;
             text-align: center;
+            text-decoration: none; /* 밑줄 제거 */
+            display: flex;       /* 글자 중앙 정렬 */
+            align-items: center;
+            justify-content: center;
+            height: 40px;        /* 버튼 높이 고정 */
+            width: 60px;         /* 버튼 너비 등 */
+            line-height: 1.2;
         }
 
-        /* 푸터 영역 */
         .footer {
             margin-top: 30px;
             font-size: 12px;
@@ -178,7 +179,7 @@
                     <p>사진 촬영으로<br>시공 불량 및 외풍 분석</p>
                 </div>
             </div>
-            <button class="go-start-btn">GO<br>START</button>
+            <a href="https://anhjjeon1.github.io/sash-ai-diagnosis/index.html" class="go-start-btn">GO<br>START</a>
         </div>
 
         <div class="menu-box">
@@ -189,7 +190,7 @@
                     <p>자가 진단표 작성<br>환경 및 구조적 원인 파악</p>
                 </div>
             </div>
-            <button class="go-start-btn">GO<br>START</button>
+            <a href="https://anhjjeon1.github.io/dewpoint-check/" class="go-start-btn">GO<br>START</a>
         </div>
 
         <div class="footer">
@@ -206,4 +207,3 @@
 
 </body>
 </html>
-
