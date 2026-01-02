@@ -3,207 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>청개구리 하자진단 AI앱</title>
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <title>청개구리 통합 하자진단 센터(PRO용)</title>
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="청개구리 통합 하자진단 센터(PRO용)">
+    <meta property="og:description" content="현장 전문가 전용 결로 및 소음 정밀 진단 시스템 접속하기">
+    <meta property="og:image" content="https://anhjjeon1.github.io/sash-center/kakao_preview.jpg">
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* ----- CSS 스타일 정의 ----- */
         :root {
-            --primary-green: #28a745;
-            --dark-text: #333333;
-            --light-gray-bg: #f0f2f5;
-            --card-bg: #ffffff;
+            --bg-color: #f0f2f5;
+            --text-primary: #1c1e21;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         body {
-            font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-            background-color: var(--light-gray-bg);
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 10px; /* 모바일 최적화 여백 */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            color: var(--dark-text);
-            font-weight: 400;
+            color: var(--text-primary);
+            box-sizing: border-box;
         }
 
-        .container-card {
-            background-color: var(--card-bg);
+        .container {
             width: 100%;
-            max-width: 400px;
-            border-radius: 20px;
-            padding: 30px 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
+            max-width: 480px;
+            background-color: transparent;
         }
 
-        .header-badges {
-            display: flex;
-            justify-content: space-between;
+        /* 헤더 스타일 */
+        .portal-header {
+            text-align: center;
             margin-bottom: 15px;
-            font-size: 12px;
+            background-color: #fff;
+            padding: 20px 15px;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .company-logo {
+            font-size: 2.5rem;
+            color: #2e7d32; /* 청개구리 그린 */
+            margin-bottom: 5px;
+        }
+
+        .portal-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin: 0;
+            color: #1a237e;
+        }
+
+        .portal-subtitle {
+            font-size: 0.85rem;
+            color: #546e7a;
+            margin-top: 5px;
             font-weight: 500;
         }
-        .badge-green { color: var(--primary-green); background-color: #e6f4ea; padding: 4px 8px; border-radius: 12px; }
-        .badge-gray { color: #666; background-color: #eee; padding: 4px 8px; border-radius: 12px; }
 
-        h1.main-title {
-            color: var(--primary-green);
-            font-size: 24px;
-            margin: 0 0 10px 0;
-            font-weight: 700; 
+        .badge {
+            display: inline-block;
+            background-color: #e0e0e0;
+            color: #424242;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+            font-weight: bold;
         }
 
-        .description {
-            font-size: 14px;
-            color: #555;
-            line-height: 1.5;
-            margin-bottom: 25px;
-            font-weight: 400;
-        }
-
-        .video-container {
-            background-color: #000;
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 25px;
-            position: relative;
-            aspect-ratio: 16 / 9;
-            width: 100%;
-        }
-        
-        .video-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .menu-box {
-            background-color: #f9f9f9;
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 15px;
+        /* 메인 메뉴 카드 스타일 */
+        .menu-grid {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-align: left;
-        }
-        
-        .menu-content { display: flex; align-items: center; }
-        .menu-icon { font-size: 30px; margin-right: 15px; }
-        
-        .menu-text h3 {
-            font-size: 16px;
-            margin: 0 0 5px 0;
-            font-weight: 600; 
-            color: #222;
-        }
-        .menu-text p {
-            font-size: 12px;
-            color: #777;
-            margin: 0;
-            font-weight: 400;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        /* 버튼 스타일 수정 (a태그로 변경 시 깨짐 방지) */
-        .go-start-btn {
-            background-color: #333;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 15px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none; /* 밑줄 제거 */
-            display: flex;       /* 글자 중앙 정렬 */
-            align-items: center;
-            justify-content: center;
-            height: 40px;        /* 버튼 높이 고정 */
-            width: 60px;         /* 버튼 너비 등 */
-            line-height: 1.2;
-        }
-
-        .footer {
-            margin-top: 30px;
-            font-size: 12px;
-            color: #888;
-        }
-        .footer p { margin-bottom: 15px; font-weight: 400;}
-        .contact-btn {
-            display: inline-flex;
-            align-items: center;
+        .menu-card {
             background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-            color: #555;
+            padding: 18px;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
             text-decoration: none;
-            margin-bottom: 20px;
+            color: inherit;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
         }
-        .contact-btn span { margin-right: 8px; }
-        .copyright { font-size: 11px; color: #aaa; }
+
+        .menu-card:active { transform: scale(0.98); }
+
+        /* 1. 결로 진단 테마 */
+        .card-dewpoint:hover { border-color: #2979ff; }
+        .icon-box-dew {
+            width: 50px; height: 50px;
+            background-color: #e3f2fd;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: #1565c0;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        /* 2. 소음 진단 테마 */
+        .card-noise:hover { border-color: #ff6f00; }
+        .icon-box-noise {
+            width: 50px; height: 50px;
+            background-color: #fff3e0;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: #e65100;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .card-info { flex: 1; }
+        .card-title { font-size: 1.05rem; font-weight: 800; margin: 0 0 4px 0; }
+        .card-desc { font-size: 0.75rem; color: #78909c; margin: 0; }
+
+        .arrow-icon { color: #cfd8dc; font-size: 1.2rem; }
+
+        /* 푸터 */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #90a4ae;
+            font-size: 0.7rem;
+            line-height: 1.4;
+        }
 
     </style>
 </head>
 <body>
 
-    <div class="container-card">
-        <div class="header-badges">
-            <span class="badge-green">AI Smart Diagnosis</span>
-            <span class="badge-gray">Ver. 1.5</span>
-        </div>
+<div class="container">
+    <header class="portal-header">
+        <div class="company-logo"><i class="fas fa-frog"></i></div>
+        <h1 class="portal-title">통합 하자진단 센터(PRO용)</h1>
+        <p class="portal-subtitle">Cheong-gaeguri Diagnostic Portal</p>
+        <span class="badge"><i class="fas fa-lock"></i> 사내 업무용 (Authorized Only)</span>
+    </header>
 
-        <h1 class="main-title">청개구리 하자진단 AI앱</h1>
+    <div class="menu-grid">
         
-        <p class="description">
-            최신 인공지능 기술로 창호(샤시) 문제를<br>
-            쉽고 정확하게 분석합니다.
-        </p>
-
-        <div class="video-container">
-            <iframe 
-                src="https://www.youtube.com/embed/f84TL4sOUPg" 
-                title="YouTube video player" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                allowfullscreen>
-            </iframe>
-        </div>
-
-        <div class="menu-box">
-            <div class="menu-content">
-                <div class="menu-icon">🏠</div>
-                <div class="menu-text">
-                    <h3>창호 정밀진단 AI앱</h3>
-                    <p>사진 촬영으로<br>시공 불량 및 외풍 분석</p>
-                </div>
+        <a href="https://anhjjeon1.github.io/cheong-gaeguri-pro-dewpoint/" class="menu-card card-dewpoint">
+            <div class="icon-box-dew">
+                <i class="fas fa-tint"></i>
             </div>
-            <a href="https://anhjjeon1.github.io/sash-ai-diagnosis/index.html" class="go-start-btn">GO<br>START</a>
-        </div>
-
-        <div class="menu-box">
-            <div class="menu-content">
-                <div class="menu-icon">💧</div>
-                <div class="menu-text">
-                    <h3>결로 원인분석 AI앱</h3>
-                    <p>자가 진단표 작성<br>환경 및 구조적 원인 파악</p>
-                </div>
+            <div class="card-info">
+                <h2 class="card-title">결로 진단 AI (PRO)</h2>
+                <p class="card-desc">이슬점 분석 · 곰팡이 원인 · 열화상 진단</p>
             </div>
-            <a href="https://anhjjeon1.github.io/dewpoint-check/" class="go-start-btn">GO<br>START</a>
-        </div>
+            <div class="arrow-icon"><i class="fas fa-chevron-right"></i></div>
+        </a>
 
-        <div class="footer">
-            <p>서비스 이용에 어려움이 있으신가요?</p>
-            <a href="tel:1599-7380" class="contact-btn">
-                <span>📞</span> 1599-7380 고객센터
-            </a>
-            <div class="copyright">
-                © 2025 Cheong-gaeguri AI Center
+        <a href="https://anhjjeon1.github.io/cheong-gaeguri-pro-noise/" class="menu-card card-noise">
+            <div class="icon-box-noise">
+                <i class="fas fa-wave-square"></i>
             </div>
-        </div>
+            <div class="card-info">
+                <h2 class="card-title">소음 진단 AI (PRO)</h2>
+                <p class="card-desc">기체 누설 · 전기 방전 · 산업용 음향 분석</p>
+            </div>
+            <div class="arrow-icon"><i class="fas fa-chevron-right"></i></div>
+        </a>
 
     </div>
+
+    <footer class="footer">
+        청개구리샤시 기술지원팀<br>
+        대표전화: 1599-7380 | 시스템 문의: 관리자<br>
+        © 2026 Cheong-gaeguri Corp. Internal System
+    </footer>
+</div>
 
 </body>
 </html>
